@@ -32,6 +32,13 @@ Go to [`release/latest`](https://github.com/js-templates/typescript-library/tree
 - [Installation](#installation)
 - [Contrubuting](#contributing)
 - [Maintenance](#maintenance)
+  - [Regular flow](#regular-flow)
+  - [Prerelease from](#prerelease-flow)
+  - [Conventions](#conventions)
+- [Using template](#using-template)
+  - [Replace everything](#replace-everything)
+  - [Add secrets](#add-secrets)
+  - [Set up branch protection](#set-up-branch-protection)
 
 ## Installation
 
@@ -106,9 +113,9 @@ Then, the `release` workflow handles everything:
 - Should describe changes
 - Should have correct labels
 
-### Recommended setup
+## Using template
 
-#### Replace everything
+### Replace everything
 
 1. Replace all `js-templates/typescript-library` entries with your repo
 2. Replace all `typescript-library` entries with your library name
@@ -117,12 +124,12 @@ Then, the `release` workflow handles everything:
 5. Update description in `README.md`
 6. Update logo's `alt`
 
-#### Add secrets
+### Add secrets
 
 - `NPM_TOKEN`
 - `FULL_ACCESS_GITHUB_TOKEN` if you plan to set up [the branch protection](#add-branch-protection)
 
-#### Add branch protection
+### Set up branch protection
 
 1. Go to `Settings` > `Branches` > `Add rule`
 2. Specify a pattern: `{main,release/*}`
