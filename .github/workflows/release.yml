@@ -26,11 +26,16 @@ jobs:
         with:
           input_string: ${{ steps.tag.outputs.version }}
     
+      - name: Check branch existence
+        id: branch-exists
+        run: echo "::set-output name=flag::$(git ls-remote --heads ${{ github.server_url }}/${{ github.repository }} ${{ needs.get-meta.outputs.branch }} | wc -l)"
+    
     outputs:
       tag: ${{ github.event.release.tag_name }}
-      version: ${{ steps.version.outputs }}
+      prerelease: ${{ steps.version.outputs.prerelease }}
+      fullversion: ${{ steps.version.outputs.fullversion }}
       branch: ${{ steps.version.outputs.prerelease != null && 'release/${{ steps.version.outputs.prerelease }}' || 'release/latest' }}
-      branch-exists: ${{ $(git ls-remote --heads ${{ github.server_url }}/${{ github.repository }} ${{ needs.get-meta.outputs.branch }} | wc -l) == '1' }}
+      branch-exists: ${{ steps.branch-exists.outputs.flag == '1' }}
 
   sync-latest:
     runs-on: ubuntu-latest
@@ -41,6 +46,9 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "<>"
+
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Create branch
         if: ${{ needs.get-meta.outputs.branch-exists == false }}
@@ -91,7 +99,7 @@ jobs:
       - name: Set version in package.json
         uses: reedyuk/npm-version@1.0.1
         with:
-          version: ${{ needs.get-meta.outputs.version.fullversion }}
+          version: ${{ needs.get-meta.outputs.fullversion }}
 
       - name: Create NPM config
         run: npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
@@ -99,9 +107,9 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish latest
-        if: ${{ needs.get-meta.outputs.version.prerelease == null }}
+        if: ${{ needs.get-meta.outputs.prerelease == null }}
         run: npm publish
 
       - name: Publish RC
-        if: ${{ needs.get-meta.outputs.version.prerelease != null }}
-        run: npm publish --tag ${{ needs.get-meta.outputs.version.prerelease }}
+        if: ${{ needs.get-meta.outputs.prerelease != null }}
+        run: npm publish --tag ${{ needs.get-meta.outputs.prerelease }}
