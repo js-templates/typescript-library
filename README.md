@@ -39,6 +39,7 @@ Go to [`release/latest`](https://github.com/js-templates/typescript-library/tree
   - [Replace everything](#replace-everything)
   - [Add secrets](#add-secrets)
   - [Set up branch protection](#set-up-branch-protection)
+  - [The last step](#the-last-step)
 
 ## Installation
 
@@ -144,3 +145,7 @@ Then, the `release` workflow handles everything:
 5. [Create a new Personal Access Token](https://github.com/settings/tokens/new) with `repo` permissions
 6. Use it as a new Secret named `FULL_ACCESS_GITHUB_TOKEN`  
    It's needed to bypass the branch protection on CI runs
+
+### The last step
+
+Remove **Using Template** section from README (don't forget about Navigation links)
