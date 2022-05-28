@@ -14,17 +14,9 @@ jobs:
           ref: ${{ github.event.release.tag_name }}
           fetch-depth: 0
 
-      - name: Get version
-        id: tag
-        uses: olegtarasov/get-tag@v2.1.1
-        with:
-          tagRegex: 'v(?<version>.*)'
-
-      - name: Parse semver string
+      - name: Parse version from tag
         id: version 
-        uses: booxmedialtd/ws-action-parse-semver@v1
-        with:
-          input_string: ${{ steps.tag.outputs.version }}
+        uses: release-kit/semver@v1
     
       - name: Check branch existence
         id: branch-exists
@@ -33,7 +25,7 @@ jobs:
     outputs:
       tag: ${{ github.event.release.tag_name }}
       prerelease: ${{ steps.version.outputs.prerelease }}
-      fullversion: ${{ steps.version.outputs.fullversion }}
+      full-version: ${{ steps.version.outputs.full }}
       branch: ${{ steps.version.outputs.prerelease != null && 'release/${{ steps.version.outputs.prerelease }}' || 'release/latest' }}
       branch-exists: ${{ steps.branch-exists.outputs.flag == '1' }}
 
@@ -51,13 +43,13 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Create branch
-        if: ${{ needs.get-meta.outputs.branch-exists == false }}
+        if: ${{ !needs.get-meta.outputs.branch-exists }}
         run: |
           git checkout -b ${{ needs.get-meta.outputs.branch }}
           git push -u origin ${{ needs.get-meta.outputs.branch }}
 
       - name: Checkout branch
-        if: ${{ needs.get-meta.outputs.branch-exists == true }}
+        if: ${{ needs.get-meta.outputs.branch-exists }}
         run: git checkout ${{ needs.get-meta.outputs.branch }} 
 
       - name: Override branch using tag HEAD
@@ -99,7 +91,7 @@ jobs:
       - name: Set version in package.json
         uses: reedyuk/npm-version@1.0.1
         with:
-          version: ${{ needs.get-meta.outputs.fullversion }}
+          version: ${{ needs.get-meta.outputs.full-version }}
 
       - name: Create NPM config
         run: npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
@@ -107,9 +99,9 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish latest
-        if: ${{ needs.get-meta.outputs.prerelease == null }}
+        if: ${{ needs.get-meta.outputs.prerelease == '' }}
         run: npm publish
 
       - name: Publish RC
-        if: ${{ needs.get-meta.outputs.prerelease != null }}
+        if: ${{ needs.get-meta.outputs.prerelease != '' }}
         run: npm publish --tag ${{ needs.get-meta.outputs.prerelease }}
