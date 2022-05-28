@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="logo.svg" width="300" align="center" alt="Typescript Library Logo" style="max-width: 100%;" />
+  <img src="logo.svg" width="200" align="center" alt="Typescript Library Logo" style="max-width: 100%;" />
   <h1></h1>
   <p align="center">
     ✨ Typescript library template ✨
