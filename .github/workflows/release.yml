@@ -1,0 +1,107 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  get-meta:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout to tag
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          fetch-depth: 0
+
+      - name: Get version
+        id: tag
+        uses: olegtarasov/get-tag@v2.1.1
+        with:
+          tagRegex: 'v(?<version>.*)'
+
+      - name: Parse semver string
+        id: version 
+        uses: booxmedialtd/ws-action-parse-semver@v1
+        with:
+          input_string: ${{ steps.tag.outputs.version }}
+    
+    outputs:
+      tag: ${{ github.event.release.tag_name }}
+      version: ${{ steps.version.outputs }}
+      branch: ${{ steps.version.outputs.prerelease != null && 'release/${{ steps.version.outputs.prerelease }}' || 'release/latest' }}
+      branch-exists: ${{ $(git ls-remote --heads ${{ github.server_url }}/${{ github.repository }} ${{ needs.get-meta.outputs.branch }} | wc -l) == '1' }}
+
+  sync-latest:
+    runs-on: ubuntu-latest
+    needs: get-meta
+    if: needs.get-meta.outputs.branch == 'release/latest'
+    steps:
+      - name: Setup git
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "<>"
+
+      - name: Create branch
+        if: ${{ needs.get-meta.outputs.branch-exists == false }}
+        run: |
+          git checkout -b ${{ needs.get-meta.outputs.branch }}
+          git push -u origin ${{ needs.get-meta.outputs.branch }}
+
+      - name: Checkout branch
+        if: ${{ needs.get-meta.outputs.branch-exists == true }}
+        run: git checkout ${{ needs.get-meta.outputs.branch }} 
+
+      - name: Override branch using tag HEAD
+        run: git reset --hard ${{ needs.get-meta.outputs.tag }}
+
+      - name: Push to protected branch
+        uses: CasperWA/push-protected@v2
+        env:
+          TOKEN: ${{ secrets.FULL_ACCESS_GITHUB_TOKEN }}
+        if: ${{ env.TOKEN != '' }}
+        with:
+          token: ${{ secrets.FULL_ACCESS_GITHUB_TOKEN }}
+          branch: ${{ needs.get-meta.outputs.branch }}
+          tags: true
+          force: true
+          unprotect_reviews: true
+  
+      - name: Push to unprotected branch
+        env:
+          TOKEN: ${{ secrets.FULL_ACCESS_GITHUB_TOKEN }}
+        if: ${{ env.TOKEN == '' }}
+        run: git push --tags --force
+
+  release:
+    runs-on: ubuntu-latest
+    needs: get-meta
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16
+          registry-url: https://registry.npmjs.org/
+
+      - name: Build package
+        run: |
+          yarn install --frozen-lockfile
+          yarn build
+          yarn test
+
+      - name: Set version in package.json
+        uses: reedyuk/npm-version@1.0.1
+        with:
+          version: ${{ needs.get-meta.outputs.version.fullversion }}
+
+      - name: Create NPM config
+        run: npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish latest
+        if: ${{ needs.get-meta.outputs.version.prerelease == null }}
+        run: npm publish
+
+      - name: Publish RC
+        if: ${{ needs.get-meta.outputs.version.prerelease != null }}
+        run: npm publish --tag ${{ needs.get-meta.outputs.version.prerelease }}

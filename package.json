@@ -1,0 +1,41 @@
+{
+  "name": "typescript-library",
+  "version": "0.0.0-set-by-ci",
+  "description": "A TypeScript library starter template",
+  "author": "Your Name",
+  "main": "dist/index.js",
+  "exports": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/*"
+  ],
+  "repository": "git@github.com:js-templates/typescript-library.git",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "yarn build --watch",
+    "test": "jest",
+    "test:watch": "yarn test --watchAll",
+    "lint": "eslint --ext .ts,.tsx src",
+    "lint:fix": "yarn lint --fix"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jest": "^27.5.1",
+    "esbuild": "^0.14.39",
+    "eslint-kit": "^3.0.2",
+    "jest": "^28.1.0",
+    "jest-serializer-path": "^0.1.15",
+    "rollup": "^2.73.0",
+    "rollup-plugin-bundle-size": "^1.0.3",
+    "rollup-plugin-dts": "^4.2.1",
+    "rollup-plugin-esbuild": "^4.9.1",
+    "rollup-plugin-terser": "^7.0.2",
+    "ts-jest": "^28.0.2",
+    "typescript": "^4.6.4"
+  }
+}
