@@ -23,7 +23,7 @@
 
 ## Before you start
 
-The README on `main` branch can contain some unreleased changes.
+The README on `main` branch may contain some unreleased changes.
 
 Go to [`release/latest`](https://github.com/js-templates/typescript-library/tree/release/latest) branch to see the actual README for the latest version from NPM.
 
