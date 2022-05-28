@@ -132,7 +132,7 @@ Then, the `release` workflow handles everything:
 ### Set up branch protection
 
 1. Go to `Settings` > `Branches` > `Add rule`
-2. Specify a pattern: `{main,release/*}`
+2. Specify `main` branch
 3. Enable the following options:
    - Require a pull request before merging (without approvals)
    - Require status checks to pass before merging (you need to run them at least once to appear):
@@ -140,7 +140,7 @@ Then, the `release` workflow handles everything:
      - `pr-labeler`
    - Include administrators
    - Allow force pushes
-4. [Create a new Personal Access Token](https://github.com/settings/tokens/new) with `repo` permissions
-5. Use it as a new Secret named `FULL_ACCESS_GITHUB_TOKEN`  
+4. Repeat, but using `release/*` instead of `main`
+5. [Create a new Personal Access Token](https://github.com/settings/tokens/new) with `repo` permissions
+6. Use it as a new Secret named `FULL_ACCESS_GITHUB_TOKEN`  
    It's needed to bypass the branch protection on CI runs
-
