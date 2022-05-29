@@ -1,7 +1,7 @@
 {
   "name": "typescript-library",
   "version": "0.0.0-set-by-ci",
-  "description": "A TypeScript library starter template",
+  "description": "TypeScript Library Description",
   "author": "Your Name",
   "main": "dist/index.js",
   "exports": "./dist/index.js",
