@@ -2,7 +2,7 @@
   <img src="logo.svg" width="200" align="center" alt="Typescript Library Logo" style="max-width: 100%;" />
   <h1></h1>
   <p align="center">
-    ✨ Typescript library template ✨
+    ✨ TypeScript Library Description ✨
   </p>
 </p>
 <br/>
@@ -120,9 +120,9 @@ Then, the `release` workflow handles everything:
 
 1. Replace all `js-templates/typescript-library` entries with your repo
 2. Replace all `typescript-library` entries with your library name
-3. Replace all `Your Name` entries with your library name
-4. Update `logo.svg`
-5. Update description in `README.md`
+3. Replace all `TypeScript Library Description` entries with your library description
+4. Replace all `Your Name` entries with your library name
+5. Update `logo.svg`
 6. Update logo's `alt`
 
 ### Add secrets
