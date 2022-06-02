@@ -2,9 +2,9 @@ const { configure, presets } = require('eslint-kit')
 
 module.exports = configure({
   presets: [
-    presets.typescript(),
-    presets.prettier(),
+    presets.imports(),
     presets.node(),
-    presets.alias(),
+    presets.prettier(),
+    presets.typescript(),
   ],
 })
