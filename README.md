@@ -2,7 +2,7 @@
   <img src="logo.svg" width="200" align="center" alt="Typescript Library Logo" style="max-width: 100%;" />
   <h1></h1>
   <p align="center">
-    ✨ TypeScript Library Description ✨
+    ✨ Your Library Description ✨
   </p>
 </p>
 <br/>
@@ -13,10 +13,10 @@
   <a href="https://opensource.org/licenses/MIT" rel="nofollow">
     <img src="https://img.shields.io/github/license/js-templates/typescript-library" alt="License">
   </a>
-  <a href="https://www.npmjs.com/package/typescript-library" rel="nofollow">
-    <img src="https://img.shields.io/npm/dw/typescript-library.svg" alt="npm">
+  <a href="https://www.npmjs.com/package/@js-templates/typescript-library" rel="nofollow">
+    <img src="https://img.shields.io/npm/dw/@js-templates/typescript-library.svg" alt="npm">
   </a>
-  <a href="https://www.npmjs.com/package/typescript-library" rel="nofollow">
+  <a href="https://www.npmjs.com/package/@js-templates/typescript-library" rel="nofollow">
     <img src="https://img.shields.io/github/stars/js-templates/typescript-library" alt="stars">
   </a>
 </p>
@@ -46,13 +46,13 @@ Go to [`release/latest`](https://github.com/js-templates/typescript-library/tree
 NPM:
 
 ```sh
-npm install typescript-library
+npm install @js-templates/typescript-library
 ```
 
 Yarn:
 
 ```sh
-yarn add typescript-library
+yarn add @js-templates/typescript-library
 ```
 
 ## Contributing
@@ -118,9 +118,9 @@ Then, the `release` workflow handles everything:
 
 ### Replace everything
 
-1. Replace all `js-templates/typescript-library` entries with your repo
-2. Replace all `typescript-library` entries with your library name
-3. Replace all `TypeScript Library Description` entries with your library description
+1. Replace all `@js-templates/typescript-library` entries with your library name
+2. Replace all `js-templates/typescript-library` entries with your repo path
+3. Replace all `Your Library Description` entries with your library description
 4. Replace all `Your Name` entries with your library name
 5. Update `logo.svg`
 6. Update logo's `alt`
