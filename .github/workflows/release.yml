@@ -17,16 +17,20 @@ jobs:
       - name: Parse version from tag
         id: version 
         uses: release-kit/semver@v1
+
+      - name: Get branch name
+        id: branch-name
+        run: echo "::set-output name=value::${{ steps.version.outputs.prerelease != null && 'release/${{ steps.version.outputs.prerelease }}' || 'release/latest' }}"
     
       - name: Check branch existence
         id: branch-exists
-        run: echo "::set-output name=flag::$(git ls-remote --heads ${{ github.server_url }}/${{ github.repository }} ${{ needs.get-meta.outputs.branch }} | wc -l)"
+        run: echo "::set-output name=flag::$(git branch -a | egrep "remotes/origin/${{ steps.branch-name.outputs.value }}$" | wc -l)"
     
     outputs:
       tag: ${{ github.event.release.tag_name }}
       prerelease: ${{ steps.version.outputs.prerelease }}
       full-version: ${{ steps.version.outputs.full }}
-      branch: ${{ steps.version.outputs.prerelease != null && 'release/${{ steps.version.outputs.prerelease }}' || 'release/latest' }}
+      branch: ${{ steps.branch-name.outputs.value }}
       branch-exists: ${{ steps.branch-exists.outputs.flag == '1' }}
 
   sync-latest:
