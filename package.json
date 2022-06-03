@@ -28,7 +28,7 @@
     "@types/jest": "^27.5.1",
     "esbuild": "^0.14.39",
     "eslint": "^8.16.0",
-    "eslint-kit": "^5.1.1",
+    "eslint-kit": "^5.1.4",
     "jest": "^28.1.0",
     "jest-serializer-path": "^0.1.15",
     "rollup": "^2.73.0",
