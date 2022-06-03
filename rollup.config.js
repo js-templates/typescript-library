@@ -1,39 +1,52 @@
+/* eslint-disable import/no-default-export */
+/* eslint-disable no-unused-vars */
+
+import typescript from '@rollup/plugin-typescript'
 import { defineConfig } from 'rollup'
 import bundleSize from 'rollup-plugin-bundle-size'
 import dts from 'rollup-plugin-dts'
 import esbuild from 'rollup-plugin-esbuild'
 import { terser } from 'rollup-plugin-terser'
+import pkg from './package.json'
+
+const TYPECHECK = true
+const MINIFY = true
 
 const src = (file) => `src/${file}`
 const dist = (file) => `dist/${file}`
 
-const bundle = (input, config) =>
+const bundle = (input, { plugins = [], ...config }) =>
   defineConfig({
     ...config,
     input,
+    plugins: plugins.filter(Boolean).concat(bundleSize()),
+
+    // do not bundle packages
     external: (id) => !/^[./]/.test(id),
-    plugins: [...(config.plugins || []), bundleSize()],
   })
 
 const config = defineConfig([
+  /* Compiled JS (CommonJS, ESM) */
   bundle(src('index.ts'), {
-    plugins: [esbuild(), terser()],
+    plugins: [TYPECHECK && typescript(), esbuild(), MINIFY && terser()],
     output: [
       {
-        file: dist('index.js'),
+        file: pkg.main,
         format: 'cjs',
       },
       {
-        file: dist('index.mjs'),
+        file: pkg.module,
         format: 'es',
       },
     ],
   }),
+
+  /* TS declarations */
   bundle(src('index.ts'), {
     plugins: [dts()],
     output: [
       {
-        file: dist('index.d.ts'),
+        file: pkg.types,
         format: 'es',
       },
     ],
