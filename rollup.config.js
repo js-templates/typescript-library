@@ -1,6 +1,7 @@
 /* eslint-disable import/no-default-export */
 /* eslint-disable no-unused-vars */
 
+import typescript from '@rollup/plugin-typescript'
 import { defineConfig } from 'rollup'
 import bundleSize from 'rollup-plugin-bundle-size'
 import dts from 'rollup-plugin-dts'
@@ -8,6 +9,7 @@ import esbuild from 'rollup-plugin-esbuild'
 import { terser } from 'rollup-plugin-terser'
 import pkg from './package.json'
 
+const TYPECHECK = true
 const MINIFY = true
 
 const src = (file) => `src/${file}`
@@ -26,7 +28,7 @@ const bundle = (input, { plugins = [], ...config }) =>
 const config = defineConfig([
   /* Compiled JS (CommonJS, ESM) */
   bundle(src('index.ts'), {
-    plugins: [esbuild(), MINIFY && terser()],
+    plugins: [TYPECHECK && typescript(), esbuild(), MINIFY && terser()],
     output: [
       {
         file: pkg.main,
