@@ -80,7 +80,7 @@ Then, the `release` workflow handles everything:
 ### Regular flow
 
 1. Create [feature branch](#conventions)
-2. Make changes in your feature branch and [commit](#conventions)
+2. Make changes in your feature branch and [commit](#conventions) using `yarn commit`
 3. Create a Pull Request from your feature branch to `main`  
    The PR is needed to test the code before pushing to release branch
 4. If your PR contains breaking changes, don't forget to put a `BREAKING CHANGES` label
@@ -92,11 +92,11 @@ Then, the `release` workflow handles everything:
 1. Assume your prerelease tag is `beta`
 2. Create `release/beta` branch
 3. Create [feature branch](#conventions)
-4. Make changes in your feature branch and [commit](#conventions)
+4. Make changes in your feature branch and [commit](#conventions) using `yarn commit`
 5. Create a Pull Request from your feature branch to `release/beta`  
    The PR is needed to test the code before pushing to release branch
 6. Create Github release with tag like `v1.0.0-beta`, pointing to `release/beta` branch  
-   For next `beta` versions use semver build syntax: `v1.0.0-beta+1`  
+   For next `beta` versions use semver build syntax: `v1.0.0-beta+1`
 7. After that, the `release` workflow will publish your package with the `beta` tag
 8. When the `beta` version is ready to become `latest` - create a Pull Request from `release/beta` to `main` branch
 9. Continue from the [Regular flow's](#regular-flow) #5 step
@@ -104,12 +104,16 @@ Then, the `release` workflow handles everything:
 ### Conventions
 
 **Feature branches**:
+
 - Should start with `feat/`, `fix/`, `docs/`, `refactor/`, and etc., depending on the changes you want to propose (see [pr-labeler.yml](./.github/pr-labeler.yml) for a full list of scopes)
 
 **Commits**:
+
+- Should be created using `yarn commit` command
 - Should follow the [Conventional Commits specification](https://www.conventionalcommits.org)
 
 **Pull requests**:
+
 - Should have human-readable name, for example: "Add a TODO list feature"
 - Should describe changes
 - Should have correct labels
