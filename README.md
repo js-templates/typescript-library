@@ -21,6 +21,49 @@
   </a>
 </p>
 
+## Template Features
+
+- 🚀 Blazingly fast and easy installation
+- 💡 CI workflows configured for changelogs and release/prerelease cycles
+- 🧱 Perfect and easy-to-support tooling setup without any conflicts with CI environment
+- 📚 Well-documented conventions for project maintaining (commits, pull-requests, branches)
+
+## Using template
+
+### 1. Replace everything
+
+1. Replace all `@js-templates/typescript-library` entries with your library name
+2. Replace all `js-templates/typescript-library` entries with your repo path
+3. Replace all `Your Library Description` entries with your library description
+4. Replace all `Your Name` entries with your library name
+5. Update `logo.svg`
+6. Update logo's `alt`
+
+### 2. Add secrets
+
+- `NPM_TOKEN`
+- `FULL_ACCESS_GITHUB_TOKEN` if you plan to set up [the branch protection](#add-branch-protection)
+
+### 3. (optional) Set up branch protection
+
+1. Go to `Settings` > `Branches` > `Add rule`
+2. Specify `main` branch
+3. Enable the following options:
+   - Require a pull request before merging (without approvals)
+   - Require status checks to pass before merging (you need to run them at least once to appear):
+     - `test-and-build`
+     - `pr-labeler`
+   - Include administrators
+   - Allow force pushes
+4. Repeat, but using `release/*` instead of `main`
+5. [Create a new Personal Access Token](https://github.com/settings/tokens/new) with `repo` permissions
+6. Use it as a new Secret named `FULL_ACCESS_GITHUB_TOKEN`  
+   It's needed to bypass the branch protection on CI runs
+
+### 4. The last step
+
+Remove **Template Features** and **Using Template** sections from README (don't forget about Navigation links)
+
 ## Before you start
 
 The README on `main` branch may contain some unreleased changes.
@@ -29,17 +72,18 @@ Go to [`release/latest`](https://github.com/js-templates/typescript-library/tree
 
 ## Navigation
 
+- [Template Features](#template-features)
+- [Using template](#using-template)
+  - [Replace everything](#replace-everything)
+  - [Add secrets](#add-secrets)
+  - [Set up branch protection](#set-up-branch-protection)
+  - [The last step](#the-last-step)
 - [Installation](#installation)
 - [Contrubuting](#contributing)
 - [Maintenance](#maintenance)
   - [Regular flow](#regular-flow)
   - [Prerelease from](#prerelease-flow)
   - [Conventions](#conventions)
-- [Using template](#using-template)
-  - [Replace everything](#replace-everything)
-  - [Add secrets](#add-secrets)
-  - [Set up branch protection](#set-up-branch-protection)
-  - [The last step](#the-last-step)
 
 ## Installation
 
@@ -117,39 +161,3 @@ Then, the `release` workflow handles everything:
 - Should have human-readable name, for example: "Add a TODO list feature"
 - Should describe changes
 - Should have correct labels
-
-## Using template
-
-### Replace everything
-
-1. Replace all `@js-templates/typescript-library` entries with your library name
-2. Replace all `js-templates/typescript-library` entries with your repo path
-3. Replace all `Your Library Description` entries with your library description
-4. Replace all `Your Name` entries with your library name
-5. Update `logo.svg`
-6. Update logo's `alt`
-
-### Add secrets
-
-- `NPM_TOKEN`
-- `FULL_ACCESS_GITHUB_TOKEN` if you plan to set up [the branch protection](#add-branch-protection)
-
-### Set up branch protection
-
-1. Go to `Settings` > `Branches` > `Add rule`
-2. Specify `main` branch
-3. Enable the following options:
-   - Require a pull request before merging (without approvals)
-   - Require status checks to pass before merging (you need to run them at least once to appear):
-     - `test-and-build`
-     - `pr-labeler`
-   - Include administrators
-   - Allow force pushes
-4. Repeat, but using `release/*` instead of `main`
-5. [Create a new Personal Access Token](https://github.com/settings/tokens/new) with `repo` permissions
-6. Use it as a new Secret named `FULL_ACCESS_GITHUB_TOKEN`  
-   It's needed to bypass the branch protection on CI runs
-
-### The last step
-
-Remove **Using Template** section from README (don't forget about Navigation links)
