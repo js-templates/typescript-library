@@ -22,7 +22,6 @@
     "test:watch": "yarn test --watchAll",
     "lint": "eslint --ext .ts,.tsx src",
     "lint:fix": "yarn lint --fix",
-    "commit": "cz",
     "prepare": "is-ci || husky install",
     "postinstall": "yarn prepare",
     "prepack": "pinst --disable",
