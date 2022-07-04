@@ -16,7 +16,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rollup -c",
+    "build": "yarn lint --quiet && rollup -c",
     "dev": "yarn build --watch",
     "test": "jest",
     "test:watch": "yarn test --watchAll",
