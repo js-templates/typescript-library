@@ -62,7 +62,7 @@
 
 ### 4. The last step
 
-Remove **Template Features** and **Using Template** sections from README (don't forget about Navigation links)
+Remove **Template Features** and **Using Template** sections from README
 
 ## Before you start
 
@@ -72,12 +72,6 @@ Go to [`release/latest`](https://github.com/js-templates/typescript-library/tree
 
 ## Navigation
 
-- [Template Features](#template-features)
-- [Using template](#using-template)
-  - [Replace everything](#replace-everything)
-  - [Add secrets](#add-secrets)
-  - [Set up branch protection](#set-up-branch-protection)
-  - [The last step](#the-last-step)
 - [Installation](#installation)
 - [Contrubuting](#contributing)
 - [Maintenance](#maintenance)
