@@ -154,4 +154,4 @@ Then, the `release` workflow handles everything:
 
 - Should have human-readable name, for example: "Add a TODO list feature"
 - Should describe changes
-- Should have correct labels
+- Should have correct labels (handled by PR Labeler in most cases)
