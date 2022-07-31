@@ -8,7 +8,7 @@
 <br/>
 <p align="center">
   <a href="https://github.com/js-templates/typescript-library/actions?query=branch%3Amain">
-    <img src="https://github.com/js-templates/typescript-library/actions/workflows/test-and-build.yml/badge.svg?event=push&branch=main" alt="typescript-library CI Status" />
+    <img src="https://github.com/js-templates/typescript-library/actions/workflows/test-and-build.yml/badge.svg?event=push&branch=main" alt="@js-templates/typescript-library CI Status" />
   </a>
   <a href="https://opensource.org/licenses/MIT" rel="nofollow">
     <img src="https://img.shields.io/github/license/js-templates/typescript-library" alt="License">
