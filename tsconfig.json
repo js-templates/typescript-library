@@ -14,8 +14,6 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es6",
-    "declaration": true,
-    "declarationDir": "./dist",
     "outDir": "./dist",
     "typeRoots": ["./node_modules/@types"]
   },
